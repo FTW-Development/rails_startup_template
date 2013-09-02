@@ -74,6 +74,7 @@ gem_group :production do
 end
 
 run "bundle install"
+run "rake db:create"
 
 
 # Setting up foreman to deal with environment variables and services
