@@ -23,9 +23,8 @@ gem "bourbon" # Useful SASS mixins (http://bourbon.io/)
 
 
 gem_group :assets do
-  gem "sass-rails"
   gem "coffee-rails"
-  gem "bootstrap-sass"
+  #gem "bootstrap-sass"
   gem "modernizr-rails"
   gem "uglifier"
 end
