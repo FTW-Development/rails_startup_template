@@ -73,7 +73,7 @@ gem_group :production do
   gem "unicorn"
 end
 
-
+run "bundle install"
 
 
 # Setting up foreman to deal with environment variables and services
