@@ -25,7 +25,6 @@ gem "bourbon" # Useful SASS mixins (http://bourbon.io/)
 gem_group :assets do
   #gem "bootstrap-sass"
   gem "modernizr-rails"
-  gem "uglifier"
 end
  
 gem_group :development do
