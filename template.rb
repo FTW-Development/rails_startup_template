@@ -1,29 +1,63 @@
 # Gems
 # ==================================================
 
-# Segment.io as an analytics solution (https://github.com/segmentio/analytics-ruby)
-gem "analytics-ruby"
-# For encrypted password
-gem "bcrypt-ruby"
-# Useful SASS mixins (http://bourbon.io/)
-gem "bourbon"
 
 # For authorization (https://github.com/ryanb/cancan)
+gem "devise"
 gem "cancan"
+#gem "bcrypt-ruby" # For encrypted password
 
-# HAML templating language (http://haml.info)
-gem "haml-rails" if yes?("Use HAML instead of ERB?")
 
-# Simple form builder (https://github.com/plataformatec/simple_form)
-gem "simple_form"
-# To generate UUIDs, useful for various things
-gem "uuidtools"
+# Segment.io as an analytics solution (https://github.com/segmentio/analytics-ruby)
+gem "analytics-ruby"
+gem "postmark-rails" if yes?("use postmark for mail?")
 
+
+gem "simple_form"  # Simple form builder
+gem "high_voltage" if yes?("use high voltage for static pages?")
+# gem "paperclip"
+
+gem "haml-rails"  # HAML templating language (http://haml.info)
+gem "bourbon" # Useful SASS mixins (http://bourbon.io/)
+# gem "nokogiri" # HTML/CSS/XML/etc. parser and stuff
+
+
+gem_group :assets do
+  gem "sass-rails"
+  gem "coffee-rails"
+  gem "bootstrap-sass"
+  gem "modernizr-rails"
+  gem "uglifier"
+end
+ 
 gem_group :development do
-  # Rspec for tests (https://github.com/rspec/rspec-rails)
+  # server and notifications
+  gem "thin"
+  gem "growl"
+
+  # Rspec for tests 
   gem "rspec-rails"
-  # Guard for automatically launching your specs when files are modified. (https://github.com/guard/guard-rspec)
+
+  # Guard for automatically doing stuff when files are modified. 
+  gem "guard"
+  gem "guard-bundler"
+  gem "guard-livereload"
+  gem "guard-rails"
   gem "guard-rspec"
+  gem "rack-livereload"
+  #guard dependencies
+  gem "rb-fsevent", :require => false
+  gem "rb-inotify", :require => false
+  gem "rb-fchange", :require => false
+
+  # useful tool sometimes
+  gem "html2haml"
+
+  # capistrano shenanigans
+  gem "capistrano"
+  gem "capistrano-unicorn"
+  gem "rvm-capistrano"
+
 end
 
 gem_group :test do
@@ -36,26 +70,30 @@ gem_group :test do
 end
 
 gem_group :production do
-  # For Rails 4 deployment on Heroku
-  gem "rails_12factor"
+  gem "rb-inotify" #assumes linux env
+  gem "execjs"
+  gem "therubyracer"
+  gem "unicorn"
 end
+
+
 
 
 # Setting up foreman to deal with environment variables and services
 # https://github.com/ddollar/foreman
 # ==================================================
 # Use Procfile for foreman
-run "echo 'web: bundle exec rails server -p $PORT' >> Procfile"
-run "echo PORT=3000 >> .env"
-run "echo '.env' >> .gitignore"
+#run "echo 'web: bundle exec rails server -p $PORT' >> Procfile"
+#run "echo PORT=3000 >> .env"
+#run "echo '.env' >> .gitignore"
 # We need this with foreman to see log output immediately
-run "echo 'STDOUT.sync = true' >> config/environments/development.rb"
+#run "echo 'STDOUT.sync = true' >> config/environments/development.rb"
 
 
 
 # Initialize guard
 # ==================================================
-run "bundle exec guard init rspec"
+run "bundle exec guard init default"
 
 
 
@@ -71,8 +109,8 @@ run "rails g cancan:ability"
 run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
 # Remove the require_tree directives from the SASS and JavaScript files. 
 # It's better design to import or require things manually.
-run "sed -i '' /require_tree/d app/assets/javascripts/application.js"
-run "sed -i '' /require_tree/d app/assets/stylesheets/application.css.scss"
+#run "sed -i '' /require_tree/d app/assets/javascripts/application.js"
+#run "sed -i '' /require_tree/d app/assets/stylesheets/application.css.scss"
 # Add bourbon to stylesheet file
 run "echo >> app/assets/stylesheets/application.css.scss"
 run "echo '@import \"bourbon\";' >>  app/assets/stylesheets/application.css.scss"
