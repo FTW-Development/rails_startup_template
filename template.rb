@@ -161,6 +161,13 @@ doc/
 EOF"
 
 
+# RVM setup
+# ====================
+run "echo 'ruby-#{2.0}' > .ruby-version"
+run "echo '#{app_name}' > .ruby-gemset"
+
+
+
 # Git: Initialize
 # ==================================================
 git :init
