@@ -2,7 +2,7 @@
 # ==================================================
 
 # For mongo
-gem "mongoid" if yes("using mongodb?")
+gem "mongoid" if yes?("using mongodb?")
 
 
 # For authorization (https://github.com/ryanb/cancan)
