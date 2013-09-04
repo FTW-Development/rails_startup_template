@@ -1,10 +1,13 @@
 # Gems
 # ==================================================
 
+# For mongo
+gem "mongoid" if yes("using mongodb?")
+
 
 # For authorization (https://github.com/ryanb/cancan)
-gem "devise"
-gem "cancan"
+gem "devise" if yes?("need user auth?")
+gem "cancan" if yes?("need permissions?")
 #gem "bcrypt-ruby" # For encrypted password
 
 
@@ -21,11 +24,6 @@ gem "haml-rails"  # HAML templating language (http://haml.info)
 gem "bourbon" # Useful SASS mixins (http://bourbon.io/)
 # gem "nokogiri" # HTML/CSS/XML/etc. parser and stuff
 
-
-gem_group :assets do
-  #gem "bootstrap-sass"
-  gem "modernizr-rails"
-end
  
 gem_group :development do
   # server and notifications
@@ -95,8 +93,9 @@ run "bundle exec guard init default"
 
 
 
-# Initialize CanCan
+# Initialize CanCan & Devise
 # ==================================================
+run "rails g devise:install"
 run "rails g cancan:ability"
 
 
